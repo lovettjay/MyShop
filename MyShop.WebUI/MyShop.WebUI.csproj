@@ -253,10 +253,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ProductManger\Index.cshtml" />
     <Content Include="Views\ProductManger\Create.cshtml" />
+    <Content Include="Views\ProductManger\Edit.cshtml" />
+    <Content Include="Views\ProductManger\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ProductsManger\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
