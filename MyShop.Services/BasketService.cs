@@ -34,7 +34,6 @@ namespace MyShop.Services
                 string basketId = cookie.Value;
                 if (!string.IsNullOrEmpty(basketId))
                 {
-                    //string is not empty
                     basket = basketContext.Find(basketId);
                 }
                 else
@@ -42,7 +41,6 @@ namespace MyShop.Services
                     if (createIfNull)
                     {
                         basket = CreateNewBasket(httpContext);
-
                     }
                 }
             }
@@ -51,14 +49,12 @@ namespace MyShop.Services
                 if (createIfNull)
                 {
                     basket = CreateNewBasket(httpContext);
-
                 }
             }
 
             return basket;
+
         }
-
-
 
         private Basket CreateNewBasket(HttpContextBase httpContext)
         {
@@ -72,9 +68,7 @@ namespace MyShop.Services
             httpContext.Response.Cookies.Add(cookie);
 
             return basket;
-
         }
-
 
         public void AddToBasket(HttpContextBase httpContext, string productId)
         {
@@ -89,22 +83,23 @@ namespace MyShop.Services
                     ProductId = productId,
                     Quantity = 1
                 };
+
                 basket.BasketItems.Add(item);
             }
             else
             {
                 item.Quantity = item.Quantity + 1;
             }
+
             basketContext.Commit();
         }
-
 
         public void RemoveFromBasket(HttpContextBase httpContext, string itemId)
         {
             Basket basket = GetBasket(httpContext, true);
             BasketItem item = basket.BasketItems.FirstOrDefault(i => i.Id == itemId);
 
-            if (item == null)
+            if (item != null)
             {
                 basket.BasketItems.Remove(item);
                 basketContext.Commit();
@@ -126,7 +121,9 @@ namespace MyShop.Services
                                    ProductName = p.Name,
                                    Image = p.Image,
                                    Price = p.Price
-                               }).ToList();
+                               }
+                              ).ToList();
+
                 return results;
             }
             else
@@ -135,13 +132,13 @@ namespace MyShop.Services
             }
         }
 
-        public BasketSummaryViewModel GetBasketSummary(HttpContextBase httpContext)
+        public BasketSummaryViewModel GetBacketSummary(HttpContextBase httpContext)
         {
             Basket basket = GetBasket(httpContext, false);
             BasketSummaryViewModel model = new BasketSummaryViewModel(0, 0);
-
-            if (basket!= null)
+            if (basket != null)
             {
+  
                 int? basketCount = (from item in basket.BasketItems
                                     select item.Quantity).Sum();
 
@@ -159,6 +156,7 @@ namespace MyShop.Services
                 return model;
             }
         }
+
 
 
     }
